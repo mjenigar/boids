@@ -18,11 +18,4 @@ function draw() {
     boid.show();
   }
 
-  // translate(-240 * 2, 200, 0);
-  // push();
-  // rotateZ(frameCount * 0.01);
-  // rotateX(frameCount * 0.01);
-  // rotateY(frameCount * 0.01);
-  // cone(70, 70);
-  // pop();
 }

@@ -12,13 +12,9 @@ class Boid {
     }
 
     show() {
-        translate(-240 * 2, 200, 0);
-        push();
-        // rotateZ(frameCount * 0.01);
-        // rotateX(frameCount * 0.01);
-        // rotateY(frameCount * 0.01);
-        cone(70, 70);
-        pop();
+
+        // radius, height, 
+        cone(15, 30, 30, 30, true);
     }
     
 
