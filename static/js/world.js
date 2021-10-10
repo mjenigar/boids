@@ -26,7 +26,7 @@ export default class World{
         
         // Scene object
         this.scene = new THREE.Scene();
-        this.scene.add(new THREE.GridHelper(window.innerWidth, window.innerHeight));
+        // this.scene.add(new THREE.GridHelper(window.innerWidth, window.innerHeight));
 
         // The light rays from a DirectionalLight are parallel in the direction.
         let light = new THREE.DirectionalLight(0xFFFFFF, 1.0);
@@ -57,35 +57,28 @@ export default class World{
         this.scene.add(light);
         
         // orbit controls allows us to rotate around a central point in 3d world
-        const controls = new OrbitControls(this.camera, this.renderer.domElement);
-        controls.target.set(0, 20, 0);
-        controls.update();
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        // controls.target.set(0, 20, 0);
+        this.controls.minPolarAngle = Math.PI/2;
+        this.controls.maxPolarAngle = Math.PI/2;
+
         
         // cube map skybox https://en.wikipedia.org/wiki/Cube_mapping
-        const loader = new THREE.CubeTextureLoader();
-        const texture = loader.load([
-            '/static/resources/skybox/bkg1_right1.png',
-            '/static/resources/skybox/bkg1_left2.png',
-            '/static/resources/skybox/bkg1_top3.png',
-            '/static/resources/skybox/bkg1_bottom4.png',
-            '/static/resources/skybox/bkg1_front5.png',
-            '/static/resources/skybox/bkg1_back6.png'
-        ]);
-        this.scene.background = texture;
-
-        this.Render();
+        // const loader = new THREE.CubeTextureLoader();
+        // const texture = loader.load([
+        //     '/static/resources/skybox/bkg1_right1.png',
+        //     '/static/resources/skybox/bkg1_left2.png',
+        //     '/static/resources/skybox/bkg1_top3.png',
+        //     '/static/resources/skybox/bkg1_bottom4.png',
+        //     '/static/resources/skybox/bkg1_front5.png',
+        //     '/static/resources/skybox/bkg1_back6.png'
+        // ]);
+        // this.scene.background = texture;
     }
 
     OnWindowResize() {
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
         this.renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-
-    Render() {
-        requestAnimationFrame(() => {
-            this.renderer.render(this.scene, this.camera);
-            this.Render();
-        });
     }
 }
