@@ -43,3 +43,13 @@ function LimitVector(vec, limit){
 
     return _vec;
 }
+
+// function SetMagnitude()
+
+// #TODO for fun
+// function SpawnBoidPos(map){
+//     return position = {
+//         "x" : randomNumber(0, map["width"] - 1),
+//         "y" : randomNumber(0, map["height"] - 1 ) 
+//     }
+// }

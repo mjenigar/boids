@@ -1,17 +1,12 @@
 <html lang="en">
     <head>
-        <title>boids</title>
+        <title>Boids Simulator</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.3.5/Tween.min.js"></script>
-        <!--  Three.js CDN  -->
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js"></script> -->
-
-        <!-- p5.js -->
-        <!-- <script src="../static/js/p5.js"></script> -->
-        <!-- <script src="../static/js/sketch.js"></script> -->
-    </head>
+        <script src="../static/js/external/three.r119.min.js"></script>
+        <script src="../static/js/external/vanta.birds.min.js"></script>
+        
     <style>
         body {
             width: 100%;
@@ -28,7 +23,31 @@
         }
     </style>
     <body>
-        <script src="../static/js/app.js" type="module"></script>
+        <div class="row" id="background"></div>
 
     </body>
+    
+    <script>
+        VANTA.BIRDS({
+            el: "#background",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            backgroundColor: 0x0,
+            color1: 0xffffff,
+            color2: 0xb2d5d,
+            colorMode: "lerpGradient",
+            birdSize: 1.50,
+            wingSpan: 27.00,
+            speedLimit: 4.00,
+            separation: 50.00,
+            alignment: 50.00,
+            cohesion: 50.00,
+            quantity: 3.00
+        })
+    </script>
 </html>

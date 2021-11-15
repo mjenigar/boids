@@ -1,9 +1,9 @@
 WORLD_W = 25;
 WORLD_H = 25;
-N_BOIDS = 3;
+N_BOIDS = 10;
 FLOCK = [];
 
-UPDATE_INTERVAL = 5000;
+UPDATE_INTERVAL = 0;
 UPDATE = undefined;
 WORLD = GenerateWorld(WORLD_W, WORLD_H);
 
@@ -11,20 +11,27 @@ window.addEventListener('DOMContentLoaded', () => { Main();})
 
 function Main(){
     GenerateWorld(WORLD_W, WORLD_H);
+    
+    console.log("flock gen");
     for(i = 0; i < N_BOIDS; i++){
         FLOCK.push(new Boid());
     }
 
-    UPDATE = window.setInterval(function(){ 
-        console.clear();
-        for(var i = 0; i < N_BOIDS; i++){
-            FLOCK[i].FixEdges();
-            FLOCK[i].ApplyRules(FLOCK);
-            FLOCK[i].Update();
-            FLOCK[i].Move();
-        }
-        DrawWorld();
-    }, UPDATE_INTERVAL);
+    // Init draw 
+    DrawWorld();
+
+    // console.log("start");
+    // UPDATE = window.setInterval(function(){ 
+    //     console.clear();
+    //     for(var i = 0; i < N_BOIDS; i++){
+    //         FLOCK[i].Move();
+    //         FLOCK[i].FixEdges();
+            
+    //         FLOCK[i].ApplyRules(FLOCK);
+    //         // FLOCK[i].Update();
+    //     }
+    //     DrawWorld();
+    // }, UPDATE_INTERVAL);
 }
 
 function randomNumber(min, max) {
@@ -64,11 +71,12 @@ function DrawWorld(){
 class Boid {
     constructor(){
         this.char = " o ";
-        this.position = [randomNumber(0, WORLD_W-1), randomNumber(0, WORLD_H-11)];
-        this.velocity = [randomNumber((WORLD_W*-1), WORLD_W), randomNumber((WORLD_W*-1), WORLD_W)]
+        this.position = [randomNumber(0, WORLD_W-1), randomNumber(0, WORLD_H-1)];
+        // this.velocity = [randomNumber(2, 4), randomNumber((WORLD_W*-1), WORLD_W)]
         this.velocity = [1,1]
         this.acceleration = [0,0];
         this.maxForce = 1;
+        this.lowSpeed = 1;
         this.maxSpeed = 4;
         this.perception = 10;
 
@@ -76,12 +84,12 @@ class Boid {
     }
 
     FixEdges() {
-        if (this.position[0] > WORLD_W - 1) {
+        if (this.position[0] >= WORLD_W - 1) {
             this.position[0] = 0;
         } else if (this.position[0] < 0) {
             this.position[0] = WORLD_W - 1;
         }
-        if (this.position[1] > WORLD_H - 1) {
+        if (this.position[1] >= WORLD_H - 1) {
             this.position[1] = 0;
         } else if (this.position[1] < 0) {
             this.position[1] = WORLD_H - 1;
@@ -89,9 +97,13 @@ class Boid {
     }
 
     Move(){
+        console.log(this.position + "\n");
         WORLD[this.position[0]][this.position[1]] = "   ";
         this.position = AddVectors(this.position, this.velocity);
         this.velocity = AddVectors(this.position, this.acceleration);
+        this.position = LimitVector(this.position, WORLD_H-1)
+        this.velocity = LimitVector(this.position, this.maxSpeed);
+        
         WORLD[this.position[0]][this.position[1]] = this.char;
 
         // console.log("x: " + this.position[0] + " y: " + this.position[1]);
