@@ -1,47 +1,50 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
+class Boid {
+    constructor() {
+        this.boid_radius = 40;
+        this.boid_height = 100;
+        this.detail_x = 50;
+        this.detail_y = 16;
+        this.color = "#4d13b5";
 
-export default class Boid {
-        constructor(world, position) {
+        this.position = createVector(-5, 0, 0); //TODO RANDOM
+        this.velocity = p5.Vector.random3D();
 
-            /*
-             * #TODO 
-             *  - add random start position 
-             *  - add random velocity 
-             *  - limit the moving field inside the simulator container
-             *  ...
-             */
-
-            this.position = position;
-            this.velocity = [1, 0, 0];
-            
-            this.coneGeo = new THREE.ConeGeometry(2, 2),
-            this.coneMaterial = new THREE.MeshStandardMaterial({
-                color: 0x00ff00
-            }),
-            this.boid = new THREE.Mesh(this.coneGeo, this.coneMaterial);
-
-            world.scene.add(this.boid);
-            // this.boid.position.set(position[0], position[1], position[2]);
-        }
-        
-        GetCurrentPosition(){
-            this.boid.geometry.computeBoundingSphere();
-            var vector = this.boid.geometry.boundingSphere.center;
-            
-            return vector;
-        }
-
-        Move() {
-
-            if(this.boid.position.y < 200){
-                this.boid.translateY(0.05);
-            } else {
-                this.boid.position.set(0,0,0);
-            }
-
-            console.log("X: " + this.boid.position.x);
-            console.log("Y: " + this.boid.position.y);
-            console.log("Z: " + this.boid.position.z);
-            console.log("");
-        }
+        this.Spawn();
     }
+
+    Spawn() {
+        fill(this.color);
+        translate(this.position.x, this.position.y, this.position.z);
+        return cone(this.boid_radius, this.boid_height, this.detail_x, this.detail_y, true);
+    }
+
+    update() {
+        this.position.add(this.velocity);
+        // this.HandleEdges();
+        // this.velocity.add(this.acceleration);
+        // this.velocity.limit(this.maxSpeed);
+        // this.acceleration.mult(0);
+        console.log(this.position);
+    }
+
+    show() {
+        push();
+        translate(this.position);
+        pop();
+    }
+
+    HandleEdges() {
+        if (this.position.x > 1000)
+            this.position.x = 0;
+        if (this.position.x < 0)
+            this.position.x = 1000;
+        if (this.position.y > 1000)
+            this.position.y = 0;
+        if (this.position.y < 0)
+            this.position.y = 1000;
+        if (this.position.z > 1000)
+            this.position.z = 0;
+        if (this.position.z < 0)
+            this.position.z = 1000;
+    }
+}
