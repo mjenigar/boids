@@ -35,6 +35,9 @@
                 height: 100%;
                 background: #06050d80;
 			}
+            .control-item{
+                font-size: 80% !important;
+            }
         </style>
     <body>
             <!-- <button  id="controls-btn" type="button" class="btn btn-secondary btn-circle"> <i class="fas fa-sliders-h"></i> </button> -->
@@ -43,8 +46,12 @@
                     <div class="sidebar-header m-2">
                         <h3>Controls</h3>
                     </div>
+                    <div class="form-check m-2">
+                        <input class="form-check-input" type="checkbox" value="" id="grid_on">
+                        <label class="form-check-label" for="grid_on">Grid</label>
+                    </div>
                     <p class="m-2">WORLD</p>
-                    <div class="row ml-2">
+                    <div class="row ml-2 control-item">
                         <div class="col-sm-4 p-0">
                             <label class="text-dark">Boids</label>
                         </div>
@@ -53,7 +60,7 @@
                             <input type=range min=0 max=1000 value=200 id=n_boids style="width: 100px;">
                         </div>
                     </div>
-                    <div class="row ml-2">
+                    <div class="row ml-2 control-item">
                         <div class="col-sm-4 p-0">
                             <label class="text-dark">World size</label>
                         </div>
@@ -62,7 +69,91 @@
                             <input type=range min=0 max=1000 value=200 id=world_size style="width: 100px;">
                         </div>
                     </div>
-                    <!-- <output for=BoidCount id=BoidCountLabel>200</output> -->
+                    <div class="row ml-2 control-item">
+                        <div class="col-sm-4 p-0">
+                            <label class="text-dark">Center force</label>
+                        </div>
+                        <div id="center_force_value" class="col-sm-3"></div>
+                        <div class="col-sm-4">
+                            <input type=range min=0.001 max=5 value=0.5 step=0.01 id=center_force style="width: 100px;">
+                        </div>
+                    </div>
+                    <p class="m-2">BOID</p>
+                    <div class="row ml-2 control-item">
+                        <div class="col-sm-4 p-0">
+                            <label class="text-dark">Max speed</label>
+                        </div>
+                        <div id="max_speed_value" class="col-sm-3">0.5</div>
+                        <div class="col-sm-4">
+                            <input type=range min=0.01 max=5 value=0.5 id=max_speed step=0.1 style="width: 100px;">
+                        </div>
+                    </div>
+                    <div class="row ml-2 control-item">
+                        <div class="col-sm-4 p-0">
+                            <label class="text-dark">Max force</label>
+                        </div>
+                        <div id="max_force_value" class="col-sm-3"></div>
+                        <div class="col-sm-4">
+                            <input type=range min=0.001 max=3 value=0.003 step=0.01 id=max_force style="width: 100px;">
+                        </div>
+                    </div>
+                    <p class="ml-2 mb-1">Force factor</p>
+                    <div class="row ml-2 control-item">
+                        <div class="col-sm-4 p-0">
+                            <label class="text-dark">Separation</label>
+                        </div>
+                        <div id="sep_force_value" class="col-sm-3"></div>
+                        <div class="col-sm-4">
+                            <input type=range min=0.01 max=5 value=0.01 step=0.01 id=sep_force style="width: 100px;">
+                        </div>
+                    </div>
+                    <div class="row ml-2 control-item">
+                        <div class="col-sm-4 p-0">
+                            <label class="text-dark">Cohesion</label>
+                        </div>
+                        <div id="coh_force_value" class="col-sm-3"></div>
+                        <div class="col-sm-4">
+                            <input type=range min=0.01 max=5 value=0.01 step=0.01 id=coh_force style="width: 100px;">
+                        </div>
+                    </div>
+                    <div class="row ml-2 control-item">
+                        <div class="col-sm-4 p-0">
+                            <label class="text-dark">Alignment</label>
+                        </div>
+                        <div id="align_force_value" class="col-sm-3"></div>
+                        <div class="col-sm-4">
+                            <input type=range min=0.01 max=5 value=0.01 step=0.01 id=align_force style="width: 100px;">
+                        </div>
+                    </div>
+                    <p class="ml-2 mb-1">Distance</p>
+                    <div class="row ml-2 control-item">
+                        <div class="col-sm-4 p-0">
+                            <label class="text-dark">Separation</label>
+                        </div>
+                        <div id="sep_dist_value" class="col-sm-3"></div>
+                        <div class="col-sm-4">
+                            <input type=range min=1 max=100 value=10 step=1 id=sep_dist style="width: 100px;">
+                        </div>
+                    </div>
+                    <div class="row ml-2 control-item">
+                        <div class="col-sm-4 p-0">
+                            <label class="text-dark">Cohesion</label>
+                        </div>
+                        <div id="coh_dist_value" class="col-sm-3"></div>
+                        <div class="col-sm-4">
+                            <input type=range min=1 max=100 value=10 step=1 id=coh_dist style="width: 100px;">
+                        </div>
+                    </div>
+                    <div class="row ml-2 control-item">
+                        <div class="col-sm-4 p-0">
+                            <label class="text-dark">Alignment</label>
+                        </div>
+                        <div id="align_dist_value" class="col-sm-3"></div>
+                        <div class="col-sm-4">
+                            <input type=range min=1 max=100 value=10 step=1 id=align_dist style="width: 100px;">
+                        </div>
+                    </div>
+                    
                 </nav>
             </div>
 

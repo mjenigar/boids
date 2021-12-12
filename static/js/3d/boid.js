@@ -1,13 +1,13 @@
 class Boid {
-    constructor() {
+    constructor(world_size) {
         // Boid 3d object parameters
         this.radius = 1;
         this.height = 2;
         this.radial_segments = 30;
         this.height_segments = 30;
         this.color = "#4d13b5";
-        //#TODO make one
-        this.world_size = 500;
+        
+        this.world_size = world_size;
         this.max_speed = 0.5;
         this.max_force = 0.003;
         this.alignment_distance = 15;
@@ -16,6 +16,7 @@ class Boid {
         this.cohesion_factor = 0.7;
         this.separation_distance = 10;
         this.separation_factor = 1;
+        this.center_factor = 3;
 
         this.position = this.GetRandomPosition();
         this.rotation = new Vector(0, 0, 0);
@@ -39,13 +40,17 @@ class Boid {
         this.acceleration.add(align_force);
         this.acceleration.add(sep_force);
 
+        var center = new Vector(0,0,0);
+        var center_force = this.Seek(center);
+        center_force.mulScalar(this.center_factor);
+        this.acceleration.add(center_force);
+
         this.velocity.add(this.acceleration);
         this.velocity.limit(this.max_speed);
         this.position.add(this.velocity);
         
         this.acceleration.mulScalar(0);
         this.GetOrientation();
-        this.KeepInside(this.world_size);
     }
 
     GetRandomPosition(){
@@ -104,9 +109,7 @@ class Boid {
         if(count > 0) {
             sum.divScalar(count);
             sum.normalize();
-            sum.sub(this.position);
-            sum.limit(this.max_force);
-            return sum;
+            return this.Seek(sum);
         } else {
             return new Vector(0, 0, 0);
         }
@@ -139,30 +142,24 @@ class Boid {
         return sum;
     }
 
+    Seek(target){
+        target.sub(this.position)
+        target.normalize();
+        target.mulScalar(this.max_speed*10);
+
+        target.sub(this.velocity);
+        target.limit(this.max_force);
+
+        return target;
+    }
+
     KeepInside(limit){
-        var centerPosition = new Vector(0, 0, 0); //center of *black circle*
+        var centerPosition = new Vector(0, 0, 0); 
         var distance = this.position.dist(centerPosition);
         
         if (distance > limit){
             this.position = this.GetRandomPosition();
         }
-    
-    
-        // if(this.position.x > limit)
-		// 	this.position.x *= -limit + 10;
-		// if(this.position.x < -limit)
-		// 	this.position.x = limit - 10;
-		
-        // if(this.position.y > limit)
-		// 	this.position.y *= -limit + 10;
-		// if(this.position.y < -limit)
-		// 	this.position.y = limit - 10;
-		
-        // if(this.position.z > limit)
-		// 	this.position.z *= -limit + 10;
-		// if(this.position.z < -limit)
-		// 	this.position.z = limit - 10;
-    
         }
     
     GetRandomRange(from, to){ return (Math.random() * to) + from;}
