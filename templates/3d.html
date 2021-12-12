@@ -21,30 +21,44 @@
             }
 			canvas { width: 100%; height: 100% }
             .center { text-align: center !important;}
-            .text-my { color: #877da4 !important}
+            .hidden { display: none !important; }
+            /* .text-my { color: #877da4 !important} */
             #controls-btn {
                 position: absolute;
                 top: 10px;
                 right: 10px;
+                background: #3544bff0 !important;
+                color: #d3d2d4 !important;
+                border: none !important;
             }
             #controls-navbar {
                 position: absolute;
                 top: 0;
                 right: 0px;
-                width: 400px;
+                width: 0px;
                 height: 100%;
                 background: #06050d80;
 			}
-            .control-item{
-                font-size: 80% !important;
+            .control-item{ font-size: 80% !important;}
+            .back-btn-field{ font-size: 1.5rem;}
+            .back-btn{
+                cursor: pointer;
+            }
+            .back-btn:hover{
+                font-size: 1.6rem;
+                color: #3544bff0;
             }
         </style>
     <body>
-            <!-- <button  id="controls-btn" type="button" class="btn btn-secondary btn-circle"> <i class="fas fa-sliders-h"></i> </button> -->
-            <div id="controls-navbar" class="wrapper text-my">
-                <nav id="sidebar">
+            <button id="controls-btn" type="button" class="btn btn-circle text-light"> <i class="fas fa-sliders-h"></i> </button>
+            <div id="controls-navbar" class="wrapper text-light">
+                <nav id="sidebar" class="p-3">
                     <div class="sidebar-header m-2">
-                        <h3>Controls</h3>
+                        <div class="row">
+                            <div class="col-6"><h3>Controls</h3></div>
+                            <div class="col"></div>
+                            <div class="col-2 mt-2 back-btn-field"><i id="close-nav-btn" class="fas fa-chevron-right back-btn"></i></div>
+                        </div>
                     </div>
                     <div class="form-check m-2">
                         <input class="form-check-input" type="checkbox" value="" id="grid_on">

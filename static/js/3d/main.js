@@ -9,6 +9,8 @@ var world_material;
 var world_size = 32;
 var world_radius = 500;
 
+var navbar_on = false;
+
 var n_boids = 50;
 var flock = [];
 
@@ -17,6 +19,8 @@ window.addEventListener('DOMContentLoaded', () => {
 	render(flock);
 	GenerateFlock();
 	LoadValues();
+
+	$(document).on("click", "#controls-btn, #close-nav-btn", function(){ ToggleNavbar(); })
 
 	$(document).on("change", "#grid_on", function () { SwitchGrid();})
 	$(document).on("change", "#n_boids", function () { SetNofBoids();})
@@ -159,7 +163,23 @@ function LoadValues(){
 }
 
 
+
+
 /* CONTROL HANDLERS */
+function ToggleNavbar(){
+	if(navbar_on){
+		$("#controls-navbar").animate({width: '0px'}, 100, function(){
+			$("#controls-btn").removeClass("hidden");
+			navbar_on = false;
+		});
+	} else {
+		$("#controls-btn").addClass("hidden");
+		$("#controls-navbar").animate({width: '400px'}, 100, function(){
+			navbar_on = true;
+		});
+	}
+}
+
 
 function Reset(){
 	for(var i = 0; i < flock.length; i++){
@@ -264,8 +284,9 @@ function SetCenterForce(){
 	for(var i = 0; i < flock.length; i++){
 		flock[i]["boid"].center_factor = force;
 	}
-	$("#center_force_value").empty().append(dist);
+	$("#center_force_value").empty().append(force);
 }
+
 
 
 

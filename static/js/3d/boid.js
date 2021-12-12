@@ -16,7 +16,7 @@ class Boid {
         this.cohesion_factor = 0.7;
         this.separation_distance = 10;
         this.separation_factor = 1;
-        this.center_factor = 3;
+        this.center_factor = 0.5;
 
         this.position = this.GetRandomPosition();
         this.rotation = new Vector(0, 0, 0);
