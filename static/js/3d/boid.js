@@ -6,10 +6,8 @@ class Boid {
         this.radial_segments = 30;
         this.height_segments = 30;
         this.color = "#4d13b5";
-
         //#TODO make one
-        this.world_size = 150;
-        
+        this.world_size = 500;
         this.max_speed = 0.5;
         this.max_force = 0.003;
         this.alignment_distance = 15;
@@ -19,9 +17,7 @@ class Boid {
         this.separation_distance = 10;
         this.separation_factor = 1;
 
-        // random(width), random(height)
-        this.position = new Vector(0, 0, 0);
-        // this.position = new Vector((Math.random() * this.world_size), (Math.random() * this.world_size), (Math.random() * this.world_size));
+        this.position = this.GetRandomPosition();
         this.rotation = new Vector(0, 0, 0);
         this.velocity = new Vector(Math.random()*this.max_speed, Math.random()*this.max_speed, Math.random()*this.max_speed);
         this.euler_angles = new THREE.Euler(this.rotation.x, this.rotation.y, this.rotation.z);
@@ -31,7 +27,6 @@ class Boid {
     }
 
     Update(flock){
-
         var align_force = this.Alignment(flock);
         var coh_force = this.Cohesion(flock);
         var sep_force = this.Separation(flock);
@@ -47,8 +42,21 @@ class Boid {
         this.velocity.add(this.acceleration);
         this.velocity.limit(this.max_speed);
         this.position.add(this.velocity);
+        
         this.acceleration.mulScalar(0);
+        this.GetOrientation();
+        this.KeepInside(this.world_size);
+    }
 
+    GetRandomPosition(){
+        var rand_x = this.GetRandomRange(-this.world_size, this.world_size);
+        var rand_y = this.GetRandomRange(-this.world_size, this.world_size);
+        var rand_z = this.GetRandomRange(-this.world_size, this.world_size);
+        
+        return new Vector(rand_x, rand_y, rand_z);
+    }
+
+    GetOrientation(){
         var quat = new THREE.Quaternion();
         var v = new THREE.Vector3(this.velocity.x, this.velocity.y, this.velocity.z);
         v.normalize();
@@ -130,5 +138,32 @@ class Boid {
         }
         return sum;
     }
+
+    KeepInside(limit){
+        var centerPosition = new Vector(0, 0, 0); //center of *black circle*
+        var distance = this.position.dist(centerPosition);
+        
+        if (distance > limit){
+            this.position = this.GetRandomPosition();
+        }
     
+    
+        // if(this.position.x > limit)
+		// 	this.position.x *= -limit + 10;
+		// if(this.position.x < -limit)
+		// 	this.position.x = limit - 10;
+		
+        // if(this.position.y > limit)
+		// 	this.position.y *= -limit + 10;
+		// if(this.position.y < -limit)
+		// 	this.position.y = limit - 10;
+		
+        // if(this.position.z > limit)
+		// 	this.position.z *= -limit + 10;
+		// if(this.position.z < -limit)
+		// 	this.position.z = limit - 10;
+    
+        }
+    
+    GetRandomRange(from, to){ return (Math.random() * to) + from;}
 }

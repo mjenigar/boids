@@ -16,17 +16,64 @@
                 margin: 0;
                 padding: 0;
                 overscroll-behavior: none;
+                overflow-x: hidden;
+                overflow-y: hidden;
             }
+			canvas { width: 100%; height: 100% }
             .center { text-align: center !important;}
+            .text-my { color: #877da4 !important}
+            #controls-btn {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+            }
+            #controls-navbar {
+                position: absolute;
+                top: 0;
+                right: 0px;
+                width: 400px;
+                height: 100%;
+                background: #06050d80;
+			}
         </style>
     <body>
-        <!-- <script src="../static/js/external/THREEx.FullScreen.js"></script> -->
-        <script src="../static/js/external/three.js"></script>
-        <script src="../static/js/external/OrbitControls.js"></script>
-        <script src="../static/js/external/Vector.js"></script>
+            <!-- <button  id="controls-btn" type="button" class="btn btn-secondary btn-circle"> <i class="fas fa-sliders-h"></i> </button> -->
+            <div id="controls-navbar" class="wrapper text-my">
+                <nav id="sidebar">
+                    <div class="sidebar-header m-2">
+                        <h3>Controls</h3>
+                    </div>
+                    <p class="m-2">WORLD</p>
+                    <div class="row ml-2">
+                        <div class="col-sm-4 p-0">
+                            <label class="text-dark">Boids</label>
+                        </div>
+                        <div id="n_boids_value" class="col-sm-3">200</div>
+                        <div class="col-sm-4">
+                            <input type=range min=0 max=1000 value=200 id=n_boids style="width: 100px;">
+                        </div>
+                    </div>
+                    <div class="row ml-2">
+                        <div class="col-sm-4 p-0">
+                            <label class="text-dark">World size</label>
+                        </div>
+                        <div id="world_size_value" class="col-sm-3">200</div>
+                        <div class="col-sm-4">
+                            <input type=range min=0 max=1000 value=200 id=world_size style="width: 100px;">
+                        </div>
+                    </div>
+                    <!-- <output for=BoidCount id=BoidCountLabel>200</output> -->
+                </nav>
+            </div>
 
-        <script src="../static/js/3d/boid.js"></script>
-        <script src="../static/js/3d/main.js"></script>
+            <!-- <script src="../static/js/external/THREEx.FullScreen.js"></script> -->
+            <script src="../static/js/external/three.js"></script>
+            <script src="../static/js/external/OrbitControls.js"></script>
+            <script src="../static/js/external/Vector.js"></script>
+
+            <script src="../static/js/3d/boid.js"></script>
+            <script src="../static/js/3d/main.js"></script>
+        </div>
     </body>
 </html>
 

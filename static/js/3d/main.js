@@ -1,26 +1,24 @@
-var world_size = 24;
-var world_radius = 150;
+var camera;
+var controls;
+var scene;
+var renderer;
 
-var n_boids = 100;
+var world_geometry;
+var world_material;
+var world_size = 32;
+var world_radius = 500;
+
+var n_boids = 200;
 var flock = [];
 
 window.addEventListener('DOMContentLoaded', () => {
-	var camera;
-	var controls;
-	var scene;
-	var renderer;
-	
-	var world_geometry;
-	var world_material;
-	
-	var bgroup, sgroup, target, targetvel, goahead, keyboard;
-	var boidGeometry, boidMaterial, sharkGeometry, sharkMaterial;
-	goahead = false;
-
 	init();
 	render(flock);
-	// SpawnBoid(flock);
 	GenerateFlock();
+
+	$(document).on("change", "#n_boids", function () { SetNofBoids();})
+	$(document).on("change", "#world_size", function () { SetWorldRadius();})
+
 });
 
 function init() {
@@ -28,12 +26,6 @@ function init() {
 	camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
 	camera.position.z = 100;
 	
-	setupOrbitControls();
-	//Orbit Control Setup
-	controls = new THREE.OrbitControls(camera);
-	controls.damping = 0.2;
-	controls.addEventListener('change', render);
-
 	scene = new THREE.Scene();
 	scene.fog = new THREE.FogExp2(0xcccccc, 0.0027);
 
@@ -48,18 +40,21 @@ function init() {
 	document.body.appendChild(renderer.domElement);
 	window.addEventListener('resize', onWindowResize, false);
 	
-	world_geometry = new THREE.SphereGeometry(world_radius, world_size, world_size);
-	world_material = new THREE.LineDashedMaterial( { color: 0x000000, dashSize: 2, gapSize: 3 } );
-	world = new THREE.Line(world_geometry, world_material);
-	world.position.set(0, 0, 0);
-	scene.add(world);
-	
+	//Orbit Control Setup
+	controls = new THREE.OrbitControls(camera, renderer.domElement);
+	controls.damping = 0.2;
+	$("#controls-navbar").mouseenter(function(){ disableOrbit();});
+	$("#controls-navbar").mouseleave(function(){ enableOrbit();});
+
+	SpawnWorld();
+	controls.update();
 	animate();
 }
 
 function animate() {
 	requestAnimationFrame(animate);
 	render(flock);
+	controls.update();
 }
 
 function render() {
@@ -77,6 +72,14 @@ function FlockUpdate(flock) {
 	} else{
 		console.log("boids update...");
 	}
+}
+
+function SpawnWorld(){
+	world_geometry = new THREE.SphereGeometry(world_radius, world_size, world_size);
+	world_material = new THREE.LineDashedMaterial( { color: "#1c0326", dashSize: 0.5, gapSize: 0.5 } );
+	world = new THREE.Line(world_geometry, world_material);
+	world.position.set(0, 0, 0);
+	scene.add(world);
 }
 
 function SpawnBoid(){
@@ -110,17 +113,45 @@ function GenerateFlock(){
 	}
 }
 
-function setupOrbitControls() {
-	controls = new THREE.OrbitControls(camera);
-	controls.damping = 0.2;
-	controls.addEventListener('change', render);
-}
-
 function onWindowResize() {
 	camera.aspect = window.innerWidth / window.innerHeight;
 	camera.updateProjectionMatrix();
 	renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-function disableOrbit() { controls.enabled = false;}
-function enableOrbit() { controls.enabled = true; }
+/* CONTROL HANDLERS */
+function Reset(){
+	for(var i = 0; i < flock.length; i++){
+		scene.remove(flock[i]["model"]);
+	}
+	flock = [];
+	scene.remove(world);
+	SpawnWorld();
+}
+
+function SetNofBoids(){
+	n_boids = $("#n_boids").val();
+	$("#n_boids_value").empty().append(n_boids);
+	Reset();
+	GenerateFlock()
+}
+
+function SetWorldRadius(){
+	world_radius = $("#world_size").val();
+	$("#world_size_value").empty().append(world_radius);
+	Reset();
+	GenerateFlock();
+}
+
+
+function disableOrbit() { 
+	controls.enabled = false;
+	controls.rotate = false;
+	controls.update();
+}	
+	
+function enableOrbit() { 
+	controls.enabled = true;
+	controls.rotate = true;
+	controls.update();
+}
