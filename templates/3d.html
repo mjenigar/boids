@@ -27,7 +27,7 @@
                 position: absolute;
                 top: 10px;
                 right: 10px;
-                background: #3544bff0 !important;
+                background: #412c70 !important;
                 color: #d3d2d4 !important;
                 border: none !important;
             }
@@ -46,14 +46,14 @@
             }
             .back-btn:hover{
                 font-size: 1.6rem;
-                color: #3544bff0;
+                color: #412c70 !important;
             }
         </style>
     <body>
             <button id="controls-btn" type="button" class="btn btn-circle text-light"> <i class="fas fa-sliders-h"></i> </button>
             <div id="controls-navbar" class="wrapper text-light">
                 <nav id="sidebar" class="p-3">
-                    <div class="sidebar-header m-2">
+                    <div class="sidebar-header m-2 border-bottom" style="border-color:#412c70 !important;">
                         <div class="row">
                             <div class="col-6"><h3>Controls</h3></div>
                             <div class="col"></div>
@@ -64,105 +64,105 @@
                         <input class="form-check-input" type="checkbox" value="" id="grid_on">
                         <label class="form-check-label" for="grid_on">Grid</label>
                     </div>
-                    <p class="m-2">WORLD</p>
+                    <strong><p class="m-2" style="color: #390fab !important;">World</p></strong>
                     <div class="row ml-2 control-item">
-                        <div class="col-sm-4 p-0">
-                            <label class="text-dark">Boids</label>
+                        <div class="col-sm-4 p-0 ml-2">
+                            <label class="">Boids</label>
                         </div>
-                        <div id="n_boids_value" class="col-sm-3">200</div>
+                        <div id="n_boids_value_field" class="col-sm-3"><strong><span id="n_boids_value"></span></strong></div>
                         <div class="col-sm-4">
                             <input type=range min=0 max=1000 value=200 id=n_boids style="width: 100px;">
                         </div>
                     </div>
                     <div class="row ml-2 control-item">
-                        <div class="col-sm-4 p-0">
-                            <label class="text-dark">World size</label>
+                        <div class="col-sm-4 p-0 ml-2">
+                            <label class="">World size</label>
                         </div>
-                        <div id="world_size_value" class="col-sm-3">200</div>
+                        <div id="world_size_field" class="col-sm-3"><strong><span id="world_size_value"></span></strong></div>
                         <div class="col-sm-4">
                             <input type=range min=0 max=1000 value=200 id=world_size style="width: 100px;">
                         </div>
                     </div>
                     <div class="row ml-2 control-item">
-                        <div class="col-sm-4 p-0">
-                            <label class="text-dark">Center force</label>
+                        <div class="col-sm-4 p-0 ml-2">
+                            <label class="">Center force</label>
                         </div>
-                        <div id="center_force_value" class="col-sm-3"></div>
+                        <div id="center_force_field" class="col-sm-3"><strong><span id="center_force_value"></span></strong></div>
                         <div class="col-sm-4">
                             <input type=range min=0.001 max=5 value=0.5 step=0.01 id=center_force style="width: 100px;">
                         </div>
                     </div>
-                    <p class="m-2">BOID</p>
+                    <strong><p class="m-2" style="color: #390fab !important;">Boid</p></strong>
                     <div class="row ml-2 control-item">
-                        <div class="col-sm-4 p-0">
-                            <label class="text-dark">Max speed</label>
+                        <div class="col-sm-4 p-0 ml-2">
+                            <label class="">Max speed</label>
                         </div>
-                        <div id="max_speed_value" class="col-sm-3">0.5</div>
+                        <div id="max_speed_field" class="col-sm-3"><span id="max_speed_value"></span></strong></div>
                         <div class="col-sm-4">
                             <input type=range min=0.01 max=5 value=0.5 id=max_speed step=0.1 style="width: 100px;">
                         </div>
                     </div>
                     <div class="row ml-2 control-item">
-                        <div class="col-sm-4 p-0">
-                            <label class="text-dark">Max force</label>
+                        <div class="col-sm-4 p-0 ml-2">
+                            <label class="">Max force</label>
                         </div>
-                        <div id="max_force_value" class="col-sm-3"></div>
+                        <div id="max_force_field" class="col-sm-3"><span id="max_force_value"></span></strong></div>
                         <div class="col-sm-4">
                             <input type=range min=0.001 max=3 value=0.003 step=0.01 id=max_force style="width: 100px;">
                         </div>
                     </div>
-                    <p class="ml-2 mb-1">Force factor</p>
+                    <strong><p class="ml-3 mb-1">Force factor</p></strong>
                     <div class="row ml-2 control-item">
-                        <div class="col-sm-4 p-0">
-                            <label class="text-dark">Separation</label>
+                        <div class="col-sm-4 p-0 ml-2">
+                            <label class="">Separation</label>
                         </div>
-                        <div id="sep_force_value" class="col-sm-3"></div>
+                        <div id="sep_force_field" class="col-sm-3"><span id="sep_force_value"></span></strong></div>
                         <div class="col-sm-4">
                             <input type=range min=0.01 max=5 value=0.01 step=0.01 id=sep_force style="width: 100px;">
                         </div>
                     </div>
                     <div class="row ml-2 control-item">
-                        <div class="col-sm-4 p-0">
-                            <label class="text-dark">Cohesion</label>
+                        <div class="col-sm-4 p-0 ml-2">
+                            <label class="">Cohesion</label>
                         </div>
-                        <div id="coh_force_value" class="col-sm-3"></div>
+                        <div id="coh_force_field" class="col-sm-3"><span id="coh_force_value"></span></strong></div>
                         <div class="col-sm-4">
                             <input type=range min=0.01 max=5 value=0.01 step=0.01 id=coh_force style="width: 100px;">
                         </div>
                     </div>
                     <div class="row ml-2 control-item">
-                        <div class="col-sm-4 p-0">
-                            <label class="text-dark">Alignment</label>
+                        <div class="col-sm-4 p-0 ml-2">
+                            <label class="">Alignment</label>
                         </div>
-                        <div id="align_force_value" class="col-sm-3"></div>
+                        <div id="align_force_field" class="col-sm-3"><span id="align_force_value"></span></strong></div>
                         <div class="col-sm-4">
                             <input type=range min=0.01 max=5 value=0.01 step=0.01 id=align_force style="width: 100px;">
                         </div>
                     </div>
-                    <p class="ml-2 mb-1">Distance</p>
+                    <strong><p class="mb-1 ml-3">Distance</p></strong>
                     <div class="row ml-2 control-item">
-                        <div class="col-sm-4 p-0">
-                            <label class="text-dark">Separation</label>
+                        <div class="col-sm-4 p-0 ml-2">
+                            <label class="">Separation</label>
                         </div>
-                        <div id="sep_dist_value" class="col-sm-3"></div>
+                        <div id="sep_dist_field" class="col-sm-3"><span id="sep_dist_value"></span></strong></div>
                         <div class="col-sm-4">
                             <input type=range min=1 max=100 value=10 step=1 id=sep_dist style="width: 100px;">
                         </div>
                     </div>
                     <div class="row ml-2 control-item">
-                        <div class="col-sm-4 p-0">
-                            <label class="text-dark">Cohesion</label>
+                        <div class="col-sm-4 p-0 ml-2">
+                            <label class="">Cohesion</label>
                         </div>
-                        <div id="coh_dist_value" class="col-sm-3"></div>
+                        <div id="coh_dist_field" class="col-sm-3"><span id="coh_dist_value"></span></strong></div>
                         <div class="col-sm-4">
                             <input type=range min=1 max=100 value=10 step=1 id=coh_dist style="width: 100px;">
                         </div>
                     </div>
                     <div class="row ml-2 control-item">
-                        <div class="col-sm-4 p-0">
-                            <label class="text-dark">Alignment</label>
+                        <div class="col-sm-4 p-0 ml-2">
+                            <label class="">Alignment</label>
                         </div>
-                        <div id="align_dist_value" class="col-sm-3"></div>
+                        <div id="align_dist_field" class="col-sm-3"><span id="align_dist_value"></span></strong></div>
                         <div class="col-sm-4">
                             <input type=range min=1 max=100 value=10 step=1 id=align_dist style="width: 100px;">
                         </div>
