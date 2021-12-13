@@ -59,9 +59,6 @@ class Boid {
         var rand_x = Math.random() * this.world_size - 150;
         var rand_y = Math.random() * this.world_size - 150;
         var rand_z = Math.random() * this.world_size - 150;
-        // var rand_x = this.GetRandomRange(-this.world_size, this.world_size);
-        // var rand_y = this.GetRandomRange(-this.world_size, this.world_size);
-        // var rand_z = this.GetRandomRange(-this.world_size, this.world_size);
         
         return new Vector(rand_x, rand_y, rand_z);
     }
@@ -122,7 +119,7 @@ class Boid {
 
     Separation(flock) {
         var boid_counter = 0;
-        var sum = new Vector(0, 0, 0);
+        var steering = new Vector(0, 0, 0);
         
         for(var i = 0; i != flock.length; i++) {
             var dist = this.position.dist(flock[i]["boid"].position);
@@ -131,20 +128,20 @@ class Boid {
                 diff.sub(flock[i]["boid"].position);
                 diff.normalize();
                 diff.divScalar(dist);
-                sum.add(diff);
+                steering.add(diff);
                 boid_counter++;
             }
         }
         
-        if(boid_counter > 0) sum.divScalar(boid_counter);
-        if(sum.x == 0 && sum.y == 0 && sum.z) return diff;
-        if(sum.mag() > 0) {
-            sum.normalize();
-            sum.mulScalar(this.max_speed);
-            sum.sub(this.velocity);
-            sum.limit(this.max_force);
+        if(boid_counter > 0) steering.divScalar(boid_counter);
+        if(steering.x == 0 && steering.y == 0 && steering.z) return diff;
+        if(steering.mag() > 0) {
+            steering.normalize();
+            steering.mulScalar(this.max_speed);
+            steering.sub(this.velocity);
+            steering.limit(this.max_force);
         }
-        return sum;
+        return steering;
     }
 
     Seek(target){
