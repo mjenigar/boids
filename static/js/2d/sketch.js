@@ -66,7 +66,7 @@ function draw() {
 
     fill(255, 0, 0, 200);
     strokeWeight(0);
-    textSize(30);
+    textSize(24);
     textAlign(CENTER)
     text(pslider.value(), pslider.width / 2 + 30, window.innerHeight-80);
     text(fslider.value() / 100, fslider.width / 2 + 330, window.innerHeight-80);
