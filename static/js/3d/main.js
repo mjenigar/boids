@@ -7,11 +7,11 @@ var world_grid = false;
 var world_geometry;
 var world_material;
 var world_size = 32;
-var world_radius = 100;
+var world_radius = 300;
 
 var navbar_on = false;
 
-var n_boids = 50;
+var n_boids = 150;
 var flock = [];
 
 window.addEventListener('DOMContentLoaded', () => {
