@@ -7,7 +7,7 @@ var world_grid = false;
 var world_geometry;
 var world_material;
 var world_size = 32;
-var world_radius = 500;
+var world_radius = 100;
 
 var navbar_on = false;
 
@@ -15,8 +15,10 @@ var n_boids = 50;
 var flock = [];
 
 window.addEventListener('DOMContentLoaded', () => {
+	$('#grid_on').prop("checked", false);
+	
 	init();
-	render(flock);
+	render();
 	GenerateFlock();
 	LoadValues();
 
@@ -61,14 +63,13 @@ function init() {
 	$("#controls-navbar").mouseenter(function(){ disableOrbit();});
 	$("#controls-navbar").mouseleave(function(){ enableOrbit();});
 
-	// SpawnWorld();
 	controls.update();
 	animate();
 }
 
 function animate() {
 	requestAnimationFrame(animate);
-	render(flock);
+	render();
 	controls.update();
 }
 
@@ -162,9 +163,6 @@ function LoadValues(){
 	$("#center_force_value").empty().append(flock[0]["boid"].center_factor);
 }
 
-
-
-
 /* CONTROL HANDLERS */
 function ToggleNavbar(){
 	if(navbar_on){
@@ -180,14 +178,16 @@ function ToggleNavbar(){
 	}
 }
 
-
 function Reset(){
 	for(var i = 0; i < flock.length; i++){
 		scene.remove(flock[i]["model"]);
 	}
 	flock = [];
-	// scene.remove(world);
-	// SpawnWorld();
+
+	if(world_grid){
+		scene.remove(world);
+		SpawnWorld();
+	}
 }
 
 function SwitchGrid(){
@@ -198,14 +198,14 @@ function SwitchGrid(){
 		scene.remove(world);
 		world_grid = false;
 	}
-
 }
 
 function SetNofBoids(){
 	n_boids = $("#n_boids").val();
 	$("#n_boids_value").empty().append(n_boids);
 	Reset();
-	GenerateFlock()
+	GenerateFlock();
+	GeneratePredators();
 }
 
 function SetWorldRadius(){
@@ -213,6 +213,7 @@ function SetWorldRadius(){
 	$("#world_size_value").empty().append(world_radius);
 	Reset();
 	GenerateFlock();
+	GeneratePredators();
 }
 
 function SetMaxSpeed(){
@@ -286,9 +287,6 @@ function SetCenterForce(){
 	}
 	$("#center_force_value").empty().append(force);
 }
-
-
-
 
 function disableOrbit() { 
 	controls.enabled = false;
